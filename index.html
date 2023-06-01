@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="style.css">
+  
+  <title>Frontend Mentor | Advice generator app</title>
+</head>
+<body>
+  <main>
+    <div class="card">
+      <h1>Advice #<span id="advice-num">?</span></h1>
+      <blockquote id="quote">Loading...</blockquote>
+      <picture class="divider-container">
+        <source media="(min-width: 601px)" srcset="images/pattern-divider-desktop.svg">
+        <source media="(max-width: 600px)" srcset="images/pattern-divider-mobile.svg">
+        <img class="divider" src="images/pattern-divider-desktop.svg" alt="">
+      </picture>
+      <div class="dice-container">
+        <img src="images/icon-dice.svg" alt="Dice">
+      </div>
+    </div>
+  </main>
+  
+  <script>
+    // TODO: fetch from https://api.adviceslip.com/advice
+    
+    document.getElementsByClassName("dice-container")[0].addEventListener("click", () => {
+      getAdvice();
+    });
+    getAdvice();
+
+    async function getAdvice() {
+      // Example JSON:
+      // {"slip": { "id": 40, "advice": "Never run with scissors."}}
+      const response = await fetch("https://api.adviceslip.com/advice");
+      const json = await response.json();
+      
+      document.getElementById("advice-num").innerText = json.slip.id;
+      document.getElementById("quote").innerText = json.slip.advice;
+    }
+  </script>
+</body>
+</html>
